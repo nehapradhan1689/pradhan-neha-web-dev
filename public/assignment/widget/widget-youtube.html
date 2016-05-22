@@ -5,7 +5,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="viewport" content="initial-scale=1.25, user-scalable = no">
-        <title>User Profile</title>
+        <title>Edit Widget-Youtube</title>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
         <link href="/assignment/css/style.css" rel="stylesheet"/>
     </head>
@@ -15,11 +15,16 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-inner">
+                    <p class="navbar-text pull-left">
+                        <a href="/assignment/widget/widget-list.html" class="navbar-link">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    </p>
                     <a class="navbar-brand" href="#">
-                        Profile
+                        Widget Edit
                     </a>
                     <p class="navbar-text pull-right">
-                        <a href="/assignment/user/profile.html" class="navbar-link">
+                        <a href="/assignment/widget/widget-list.html" class="navbar-link">
                             <span class="glyphicon glyphicon-ok"></span>
                         </a>
                     </p>
@@ -28,57 +33,47 @@
         </nav>
 
         <div class="container">
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Success!</strong> Your profile was saved.
-            </div>
             <form>
                 <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="name">Name</label>
                     <input type="text"
                            class="form-control"
-                           placeholder="janedoe"
-                           id="username"/>
+                           placeholder="Name"
+                           id="name"/>
                 </div>
                 <div class="form-group">
-                    <label for="emailID">Email</label>
-                    <input type="email"
-                           class="form-control"
-                           placeholder="janedoe@gmail.com"
-                           id="emailID"/>
-                </div>
-                <div class="form-group">
-                    <label for="first-name">First Name</label>
+                    <label for="title">Text</label>
                     <input type="text"
                            class="form-control"
-                           placeholder="Jane"
-                           id="first-name"/>
+                           placeholder="Text"
+                           id="title"/>
                 </div>
                 <div class="form-group">
-                    <label for="last-name">Last Name</label>
-                    <input type="text"
+                    <label for="url">URL</label>
+                    <input type="url"
                            class="form-control"
-                           placeholder="Doe"
-                           id="last-name"/>
+                           placeholder="URL"
+                           value="https://www.youtube.com/embed/L3MtFGWRXAA"
+                           id="url"/>
+                </div>
+                <div class="form-group">
+                    <label for="size">Width</label>
+                    <select type="text"
+                           class="form-control"
+                           value="Select Size"
+                           id="size">
+                        <option default>Select Width</option>
+                        <option>100%</option>
+                        <option>150%</option>
+                        <option>200%</option>
+                        <option>250%</option>
+                        <option>300%</option>
+                    </select>
                 </div>
             </form>
-            <a href="/assignment/website/website-list.html"
-               class="btn btn-primary btn-block">Websites</a>
-            <a href="login.html"
-               class="btn btn-danger btn-block">Logout</a>
+            <a href="/assignment/widget/widget-list.html"
+               class="btn btn-danger btn-block">Delete</a>
         </div>
-
-<!--        <nav class="navbar navbar-default navbar-fixed-bottom">
-            <div class="container">
-                <div class="row navbar-text">
-                    <div class="col-xs-3 text-right pull-right">
-                        <a href="profile.html">
-                            <span class="glyphicon glyphicon-user"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>-->
 
         <nav class="navbar navbar-default navbar-fixed-bottom">
             <div class="container-fluid">
