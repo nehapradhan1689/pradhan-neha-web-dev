@@ -1,11 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Assignment Home Page</title>
-</head>
-<body>
-    <h1>Assignment Home Page</h1>
-    <a href="/assignment/user/login.html">Login Page</a>
-</body>
+
+<!-- Declares the document as an Angular single page document. -->
+<html lang="en" ng-app="WebAppMaker">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="viewport" content="initial-scale=1.25, user-scalable = no">
+        <title>Web Application Maker</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="/assignment/css/style.css" rel="stylesheet"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+        <!-- Angular routing module -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+        <!-- Create and declare angular application on javascript side-->
+        <script src="app.js"></script>
+        <script src="config.js"></script>
+        <!-- Load the controller javascript file. -->
+        <script src="views/user/user.controller.client.js"></script>
+
+
+    </head>
+    <body>
+        <div ng-view></div>
+    </body>
 </html>
