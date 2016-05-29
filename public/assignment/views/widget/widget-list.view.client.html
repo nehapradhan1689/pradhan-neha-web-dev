@@ -1,0 +1,75 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <p class="navbar-text pull-left">
+                <a href="/assignment/page/page-list.html" class="navbar-link">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+            </p>
+            <a class="navbar-brand" href="#">
+                Widgets
+            </a>
+            <p class="navbar-text pull-right">
+                <a href="/assignment/widget/widget-chooser.html" class="navbar-link">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div ng-repeat="widget in model.widgets" class="jga-widget">
+        <div class="jga-widget-spec">
+            <a href="/assignment/widget/widget-heading.html">
+                <span class="glyphicon glyphicon-cog"></span>
+            </a>
+            <span class="glyphicon glyphicon-align-justify"></span>
+        </div>
+
+        <div ng-switch="widget.widgetType">
+            <div ng-switch-when="HEADER" ng-switch="widget.size">
+                <h1 ng-switch-when="1">{{widget.text}}</h1>
+                <h2 ng-switch-when="2">{{widget.text}}</h2>
+                <h3 ng-switch-when="3">{{widget.text}}</h3>
+                <h4 ng-switch-when="4">{{widget.text}}</h4>
+                <h5 ng-switch-when="5">{{widget.text}}</h5>
+                <h6 ng-switch-when="6">{{widget.text}}</h6>
+            </div>
+            <div ng-switch-when="HTML">
+                <div ng-bind-html="model.getSafeHtml(widget)"></div>
+            </div>
+            <div ng-switch-when="IMAGE">
+                <img ng-src="{{widget.url}}" width="{{widget.width}}"/>
+            </div>
+            <div ng-switch-when="YOUTUBE">
+                <iframe width="{{widget.width}}" ng-src="{{model.getSafeUrl(widget)}}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div ng-switch-default>Unable to render widget</div>
+        </div>
+    </div>
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <p class="navbar-text pull-left">
+                <a href="#" class="navbar-link">
+                    <span class="glyphicon glyphicon-play"></span>
+                </a>
+            </p>
+            <p class="navbar-text pull-left">
+                <a href="#" class="navbar-link">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </a>
+            </p>
+            <p class="navbar-text pull-right">
+                <a href="/assignment/user/profile.html" class="navbar-link">
+                    <span class="glyphicon glyphicon-user text-primary"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>

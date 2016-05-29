@@ -14,9 +14,9 @@
 </nav>
 
 <div class="container">
-    <div class="alert alert-success alert-dismissible" role="alert">
+    <div ng-if="model.message" class="alert alert-success alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Success!</strong> Your profile was saved.
+        {{model.message}}
     </div>
     <form>
         <div class="form-group">
@@ -52,7 +52,7 @@
                    id="last-name"/>
         </div>
     </form>
-    <a href="#/website-list"
+    <a href="#/user/{{model.user._id}}/website"
        class="btn btn-primary btn-block">Websites</a>
     <a href="#/login"
        class="btn btn-danger btn-block">Logout</a>
@@ -63,7 +63,7 @@
         <div class="navbar-inner">
             <a class="navbar-brand" href="#"></a>
             <p class="navbar-text pull-right">
-                <a href="#/profile" class="navbar-link">
+                <a href="#/user/{{model.user._id}}" class="navbar-link">
                     <span class="glyphicon glyphicon-user text-primary"></span>
                 </a>
             </p>
