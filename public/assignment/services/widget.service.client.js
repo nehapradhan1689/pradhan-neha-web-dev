@@ -17,12 +17,61 @@
 
     function WidgetService() {
         var api = {
-            findWidgetsByPageId: findWidgetsByPageId
+            createWidget: createWidget,
+            findWidgetsByPageId: findWidgetsByPageId,
+            findWidgetById: findWidgetById,
+            updateWidget: updateWidget,
+            deleteWidget: deleteWidget
         }
         return api;
         
-        function findWidgetsByPageId(pageId) {
-            return widgets;
+        function createWidget(pageId, widget) {
+            var newWidget = {
+                _id: (new Date()).getTime()+"",
+                widgetType: widget.widgetType,
+                pageId: pageId
+            };
+            widgets.push(newWidget);
+            return newWidget;
         }
+        
+        function findWidgetsByPageId(pageId) {
+            var resultSet = [];
+            for(var i in widgets) {
+                if(widgets[i].pageId === pageId) {
+                    resultSet.push(widgets[i]);
+                }
+            }
+            return resultSet;
+        }
+        function findWidgetById(widgetId) {
+            for (var i in widgets) {
+                if (widgets[i]._id === widgetId) {
+                    return widgets[i];
+                }
+            }
+            return null;
+        }
+        
+        function updateWidget(widgetId, widget) {
+            for(var i in widgets) {
+                if(widgets[i]._id === widgetId) {
+                    widgets[i] = widget;
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        function deleteWidget(widgetId) {
+            for(var i in widgets) {
+                if(widgets[i]._id === widgetId) {
+                    widgets.splice(i, 1);
+                    return true;
+                }
+            }
+            return false;
+        }
+        
     }
 })();

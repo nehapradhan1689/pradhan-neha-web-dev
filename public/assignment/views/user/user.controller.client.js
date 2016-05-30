@@ -22,7 +22,7 @@
             for(var i in users) {
                 if(users[i].username === username && users[i].password === password) {
                     //url function allows us to retrieve the URL, read the URL and set it.
-                    $location.url("/profile/"+users[i]._id);
+                    $location.url("/user/"+users[i]._id);
                 }
                 else {
                     vm.error = "User not found";

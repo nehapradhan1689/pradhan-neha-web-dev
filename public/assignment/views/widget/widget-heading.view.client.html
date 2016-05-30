@@ -1,0 +1,71 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <p class="navbar-text pull-left">
+                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="navbar-link">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+            </p>
+            <a class="navbar-brand" href="#">
+                Widget Edit
+            </a>
+            <p class="navbar-text pull-right">
+                <a ng-click="model.updateWidget(model.widget)" class="navbar-link">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input ng-model="model.widget.name"
+                   type="text"
+                   class="form-control"
+                   placeholder="Name"
+                   id="name"/>
+        </div>
+        <div class="form-group">
+            <label for="title">Text</label>
+            <input ng-model="model.widget.text"
+                   type="text"
+                   class="form-control"
+                   placeholder="Text"
+                   value="BUZZFEED"
+                   id="title"/>
+        </div>
+        <div class="form-group">
+            <label for="size">Size</label>
+            <select ng-model="model.widget.size"
+                    type="text"
+                   class="form-control"
+                   value="Select Size"
+                   id="size">
+                <option default>Select Size</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+    </form>
+    <a ng-click="model.deleteWidget(model.widgetId)"
+       class="btn btn-danger btn-block">Delete</a>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <a class="navbar-brand" href="#"></a>
+            <p class="navbar-text pull-right">
+                <a href="#/user/{{model.userId}}" class="navbar-link">
+                    <span class="glyphicon glyphicon-user text-primary"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>

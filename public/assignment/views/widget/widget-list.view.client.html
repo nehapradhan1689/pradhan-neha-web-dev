@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="navbar-inner">
             <p class="navbar-text pull-left">
-                <a href="/assignment/page/page-list.html" class="navbar-link">
+                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page" class="navbar-link">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </p>
@@ -10,7 +10,7 @@
                 Widgets
             </a>
             <p class="navbar-text pull-right">
-                <a href="/assignment/widget/widget-chooser.html" class="navbar-link">
+                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new" class="navbar-link">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </p>
@@ -22,7 +22,7 @@
 
     <div ng-repeat="widget in model.widgets" class="jga-widget">
         <div class="jga-widget-spec">
-            <a href="/assignment/widget/widget-heading.html">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
             <span class="glyphicon glyphicon-align-justify"></span>
@@ -66,7 +66,7 @@
                 </a>
             </p>
             <p class="navbar-text pull-right">
-                <a href="/assignment/user/profile.html" class="navbar-link">
+                <a href="#/user/{{model.userId}}" class="navbar-link">
                     <span class="glyphicon glyphicon-user text-primary"></span>
                 </a>
             </p>
