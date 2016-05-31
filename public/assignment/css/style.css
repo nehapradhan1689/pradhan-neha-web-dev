@@ -24,3 +24,7 @@ body {
 span.glyphicon.glyphicon-eye-open {
     padding-left: 10px;
 }
+
+.widget-cnf {
+    padding-bottom: 15px;
+}

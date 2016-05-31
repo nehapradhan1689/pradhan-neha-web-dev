@@ -40,7 +40,7 @@
             <div ng-switch-when="HTML">
                 <div ng-bind-html="model.getSafeHtml(widget)"></div>
             </div>
-            <div ng-switch-when="IMAGE">
+            <div ng-switch-when="IMAGE" class="widget-cnf">
                 <img ng-src="{{widget.url}}" width="{{widget.width}}"/>
             </div>
             <div ng-switch-when="YOUTUBE">
