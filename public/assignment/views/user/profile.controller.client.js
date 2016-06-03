@@ -23,8 +23,15 @@
 
 
         function updateUser(newUser) {
-            UserService.updateUser(id, newUser);
-            vm.message = "Success! Your profile was saved."
+            UserService
+                .updateUser(id, newUser)
+                .then(function(response) {
+                    vm.success = "Success! Your profile was updated successfully"
+
+                }, function(error) {
+                    vm.error = "Unable to update user";
+                })
+
         }
     }
 })();

@@ -29,14 +29,8 @@
 
         function updateUser(id, newUser) {
             // console.log(newUser);
-            for(var i in users) {
-                if(users[i]._id === id) {
-                    users[i].firstName = newUser.firstName;
-                    users[i].lastName = newUser.lastName;
-                    return true;
-                }
-            }
-            return false;
+            var url = "/api/user/" + id;
+            return $http.put(url, newUser);
         }
         
         function findUserByUsername(username) {
@@ -50,7 +44,7 @@
             //     username: user.username,
             //     password: user.password
             // };
-            
+
             return $http.post("/api/user", user);
         }
 
