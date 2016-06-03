@@ -23,12 +23,8 @@
         }
 
         function findUserById(id) {
-            for(var i in users) {
-                if(users[i]._id === id) {
-                    return users[i];
-                }
-            }
-            return null;
+            var url = "/api/user/" + id;
+            return $http.get(url);
         }
 
         function updateUser(id, newUser) {
@@ -44,23 +40,18 @@
         }
         
         function findUserByUsername(username) {
-            for(var i in users) {
-                if(users[i].username === username) {
-                    return users[i];
-                }
-            }
-            return null;
+            var url = "/api/user?username=" + username;
+            return $http.get(url);
         }
 
         function createUser(user) {
-
-                var newUser = {
-                    _id: (new Date()).getTime()+"",
-                    username: user.username,
-                    password: user.password
-                };
-                users.push(newUser);
-                return newUser;
+            // var newUser = {
+            //     _id: (new Date()).getTime()+"",
+            //     username: user.username,
+            //     password: user.password
+            // };
+            
+            return $http.post("/api/user", user);
         }
 
         function deleteUser(userId) {

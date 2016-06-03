@@ -7,10 +7,20 @@ module.exports = function(app) {
         {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
     ];
 
-    app.get("/api/user", createUser);
+    app.post("/api/user", createUser);
+    app.get("/api/user", getUser);
     app.get("/api/user/:userId", findUserById);
 
+
     function createUser(request, response) {
+        var user = request.body;
+        user._id = (new Date()).getTime()+"";
+        users.push(user);
+        //console.log(users);
+        response.send(user);
+    }
+
+    function getUser(request, response) {
         var username = request.query['username'];
         var password = request.query['password'];
         //console.log(username);

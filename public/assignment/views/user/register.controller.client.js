@@ -9,25 +9,60 @@
         vm.createUser = createUser;
 
         function createUser(username, password, verifypassword) {
-            var user = {
-                username: username,
-                password: password,
-                verifypassword: verifypassword
-            };
-            if(password != verifypassword) {
+            // if(password != verifypassword) {
+            //     vm.error = "Passwords do not match";
+            // }
+            // else if(UserService.findUserByUsername(username)) {
+            //     vm.error = "Username already exists";
+            // }
+            // else{
+            //     var newUser = UserService.createUser(user);
+            //     if(newUser) {
+            //         $location.url("/user/"+newUser._id);
+            //     }
+            //     else {
+            //         vm.error = "Unable to create user";
+            //     }
+            // }
+
+            if (username == null) {
+                vm.error = "Please enter username";
+            }
+            else if(password == null) {
+                vm.error = "Please enter a valid password";
+            }
+            else if(verifypassword == null) {
+                vm.error = "Please verify password";
+            }
+            else if(password != verifypassword) {
                 vm.error = "Passwords do not match";
             }
-            else if(UserService.findUserByUsername(username)) {
-                vm.error = "Username already exists";
-            }
-            else{
-                var newUser = UserService.createUser(user);
-                if(newUser) {
-                    $location.url("/user/"+newUser._id);
-                }
-                else {
-                    vm.error = "Unable to create user";
-                }
+            else {
+                var user = {
+                    username: username,
+                    password: password
+                };
+                UserService
+                    .findUserByUsername(username)
+                    .then(function(response) {
+                        var userReturned = response.data;
+                        if(userReturned._id) {
+                            vm.error = "Username already exists";
+                        }
+                        else{
+                            UserService
+                                .createUser(user)
+                                .then(function(response) {
+                                    var newUser = response.data;
+                                    if(newUser) {
+                                        $location.url("/user/"+newUser._id);
+                                    }
+                                    else {
+                                        vm.error = "Unable to create user";
+                                    }
+                                });
+                        }
+                    });
             }
         }
     }
