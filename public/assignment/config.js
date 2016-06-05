@@ -14,6 +14,11 @@
             .when("/",{
                 redirectTo: "/login"
             })
+            .when("/flickr", {
+                templateUrl: "views/widget/widget-flickr-search.view.client.html",
+                controller: "FlickrImageSearchController",
+                controllerAs: "model"
+            })
             .when("/login", {
                 templateUrl: "views/user/login.view.client.html",
                 //To make the controller and the corresponding HTML aware that they are associated with each other.

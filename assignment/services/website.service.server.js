@@ -16,7 +16,13 @@ module.exports = function(app) {
     app.delete("/api/website/:websiteId", deleteWebsite);
     
     function createWebsite(request, response) {
-    }
+        var newWebsite = request.body;
+        
+        newWebsite._id = (new Date()).getTime()+"";
+        websites.push(newWebsite);
+        //console.log(websites);
+        response.send(newWebsite);
+        }
 
     function findAllWebsitesForUser(request, response) {
         var id = request.params.userId;
@@ -30,12 +36,40 @@ module.exports = function(app) {
     }
 
     function findWebsiteById(request, response) {
+        var id = request.params.websiteId;
+        for(var i in websites) {
+            if(websites[i]._id === id) {
+                response.send(websites[i]);
+                return;
+            }
+        }
+        response.send({});
     }
 
     function updateWebsite(request, response) {
+        var id = request.params.websiteId;
+        var website = request.body;
+        for(var i in websites) {
+            if(websites[i]._id === id) {
+                websites[i].name = website.name;
+                websites[i].description = website.description;
+                response.send(200);
+                return;
+            }
+        }
+        response.send(400);
     }
 
     function deleteWebsite(request, response) {
+        var id  = request.params.websiteId;
+        for(var i in websites) {
+            if(websites[i]._id === id) {
+                websites.splice(i, 1);
+                response.send(200);
+                return;
+            }
+        }
+        response.send(400);
     }
 
 };
