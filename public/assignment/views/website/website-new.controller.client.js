@@ -10,7 +10,7 @@
 
         function createWebsite(name, description) {
             if(name == null) {
-                vm.error = "Please enter a website name";
+                vm.error = "Please enter a valid website name";
             }
             else {
                 var flag = false;
