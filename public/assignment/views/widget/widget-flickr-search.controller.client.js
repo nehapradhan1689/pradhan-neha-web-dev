@@ -7,7 +7,7 @@
         var vm = this;
         vm.userId = $routeParams.uid;
         vm.websiteId = $routeParams.wid;
-        vm.pageId = $routeParams.wid;
+        vm.pageId = $routeParams.pid;
         vm.widgetId = $routeParams.wgid;
         vm.searchPhotos = searchPhotos;
         vm.selectPhoto = selectPhoto;
