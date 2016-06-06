@@ -63,14 +63,27 @@
                 <option>300%</option>
             </select>
         </div>
-        <div class="form-group">
-            <label for="upload">Upload</label>
-            <input ng-model="model.widget.imageUpload" type="file" id="upload" class="form-control">
-        </div>
     </form>
-    <button class="btn btn-primary btn-block">Upload Image</button>
-    <a ng-click="model.deleteWidget(model.widgetId)"
-       class="btn btn-danger btn-block">Delete</a>
+
+    <!--<input ng-model="model.widget.imageUpload" type="file" id="upload" class="form-control">-->
+    <form action="/api/uploads"  method="post" enctype="multipart/form-data">
+        <label for="upload">Upload</label>
+        <input  name="myFile" type="file" class="form-control" id="upload"/>
+        <input  name="width" value="{{model.widget.width}}" style="display: none"/>
+        <input  name="widgetId" value="{{model.widget._id}}"   style="display: none"/>
+        <input name="pageId" value="{{model.pageId}}" style="display: none"/>
+        <input name="websiteId" value="{{model.websiteId}}" style="display: none"/>
+        <input name="userId" value="{{model.userId}}" style="display: none"/>
+        <input name="name" value="{{model.userId}}" style="display: none"/>
+        <button type="submit" class="btn btn-block btn-primary">Upload Image</button>
+
+        <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{model.widget._id}}/flickr"
+           class="btn btn-danger btn-block">Search</a>
+
+        <a ng-click="model.deleteWidget(model.widgetId)"
+           class="btn btn-danger btn-block">Delete</a>
+    </form>
+
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">

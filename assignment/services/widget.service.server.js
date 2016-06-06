@@ -1,5 +1,8 @@
 module.exports = function(app) {
 
+    var multer = require('multer'); // npm install multer --save
+    var upload = multer({ dest: __dirname+'/../../public/uploads' });
+
     var widgets = [
         { "_id": "123", "widgetType": "HEADER", "pageId": "321", "size": 2, "text": "GIZMODO"},
         { "_id": "234", "widgetType": "HEADER", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
@@ -12,11 +15,40 @@ module.exports = function(app) {
         { "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
     ];
 
+    app.post ("/api/uploads", upload.single('myFile'), uploadImage);
     app.post("/api/page/:pageId/widget", createWidget);
     app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
     app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
+
+    function uploadImage(request, response) {
+
+        var widgetId      = request.body.widgetId;
+        var width         = request.body.width;
+        var myFile        = request.file;
+
+        var pageId = request.body.pageId;
+        var websiteId = request.body.websiteId;
+        var userId = request.body.userId;
+
+
+        var originalname  = myFile.originalname; // file name on user's computer
+        var filename      = myFile.filename;     // new file name in upload folder
+        var path          = myFile.path;         // full path of uploaded file
+        var destination   = myFile.destination;  // folder where file is saved to
+        var size          = myFile.size;
+        var mimetype      = myFile.mimetype;
+
+        for (var i in widgets) {
+            if (widgets[i]._id === widgetId) {
+                widgets[i].url = "/uploads/" +filename;
+            }
+        }
+
+        response
+            .redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId);
+    }
 
     function createWidget(request, response) {
         var newWidget = request.body;
@@ -45,7 +77,7 @@ module.exports = function(app) {
                 return;
             }
         }
-        response.send({});
+        response.status(404).send("Unable to find widget with id: " + id);
     }
 
     function updateWidget(request, response) {
