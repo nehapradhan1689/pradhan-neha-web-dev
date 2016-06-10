@@ -25,13 +25,13 @@
             //     }
             // }
 
-            if (username == null) {
+            if (username == null || username == "") {
                 vm.error = "Please enter username";
             }
-            else if(password == null) {
+            else if(password == null || password == "") {
                 vm.error = "Please enter a valid password";
             }
-            else if(verifypassword == null) {
+            else if(verifypassword == null || verifypassword == "") {
                 vm.error = "Please verify password";
             }
             else if(password != verifypassword) {
@@ -46,7 +46,7 @@
                     .findUserByUsername(username)
                     .then(function(response) {
                         var userReturned = response.data;
-                        if(userReturned._id) {
+                        if(userReturned) {
                             vm.error = "Username already exists";
                         }
                         else{

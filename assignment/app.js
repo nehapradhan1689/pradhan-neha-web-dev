@@ -2,10 +2,12 @@
 //file, passed where the module is being loaded
 module.exports = function(app) {
 
-    require("./services/user.service.server")(app);
-    require("./services/website.service.server")(app);
-    require("./services/page.service.server")(app);
-    require("./services/widget.service.server")(app);
+    var models = require("./models/models.server")();
+
+    require("./services/user.service.server")(app, models);
+    require("./services/website.service.server")(app, models);
+    require("./services/page.service.server")(app, models);
+    require("./services/widget.service.server")(app, models);
 
 
     app.get("/say/:something", function(request, response) {
