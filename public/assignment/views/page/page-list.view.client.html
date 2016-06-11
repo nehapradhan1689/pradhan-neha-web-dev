@@ -21,10 +21,10 @@
 <div class="container">
     <ul class="list-group">
         <li ng-repeat="page in model.pages" class="list-group-item">
-            <a href="#/user/{{model.userId}}/website/{{page.websiteId}}/page/{{page._id}}/widget">
+            <a href="#/user/{{model.userId}}/website/{{page._website}}/page/{{page._id}}/widget">
                 {{page.name}}
             </a>
-            <a href="#/user/{{model.userId}}/website/{{page.websiteId}}/page/{{page._id}}">
+            <a href="#/user/{{model.userId}}/website/{{page._website}}/page/{{page._id}}">
                 <span class="glyphicon glyphicon-cog pull-right"></span>
             </a>
         </li>
