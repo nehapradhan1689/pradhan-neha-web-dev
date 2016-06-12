@@ -28,8 +28,8 @@
             <span class="glyphicon glyphicon-align-justify"></span>
         </div>
 
-        <div ng-switch="widget.widgetType">
-            <div ng-switch-when="HEADER" ng-switch="widget.size">
+        <div ng-switch="widget.type">
+            <div ng-switch-when="HEADING" ng-switch="widget.size">
                 <h1 ng-switch-when="1">{{widget.text}}</h1>
                 <h2 ng-switch-when="2">{{widget.text}}</h2>
                 <h3 ng-switch-when="3">{{widget.text}}</h3>
@@ -43,7 +43,7 @@
             <div ng-switch-when="IMAGE" class="widget-cnf">
                 <img ng-src="{{widget.url}}" width="{{widget.width}}"/>
             </div>
-            <div ng-switch-when="YOUTUBE">
+            <div ng-switch-when="YOUTUBE" class="youtube-widget">
                 <iframe width="{{widget.width}}" ng-src="{{model.getSafeUrl(widget)}}" frameborder="0" allowfullscreen></iframe>
             </div>
             <div ng-switch-default>Unable to render widget</div>

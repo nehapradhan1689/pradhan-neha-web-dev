@@ -30,7 +30,7 @@
             url += "/" + photo.id + "_" + photo.secret + "_b.jpg";
             var widget = {
                 _id: vm.widgetId,
-                widgetType: "IMAGE",
+                type: "IMAGE",
                 pageId: vm.pageId,
                 url: url,
                 width: "100%"

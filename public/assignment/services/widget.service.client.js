@@ -16,7 +16,7 @@
         
         function createWidget(pageId, widget) {
             var newWidget = {
-                widgetType: widget.widgetType,
+                type: widget.type,
                 pageId: pageId
             };
             // widgets.push(newWidget);

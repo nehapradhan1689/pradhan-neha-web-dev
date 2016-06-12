@@ -1,4 +1,6 @@
-module.exports = function(app) {
+module.exports = function(app, models) {
+
+    var widgetModel = models.widgetModel;
 
     var multer = require('multer'); // npm install multer --save
     var upload = multer({ dest: __dirname+'/../../public/uploads' });
@@ -40,69 +42,138 @@ module.exports = function(app) {
         var size          = myFile.size;
         var mimetype      = myFile.mimetype;
 
-        for (var i in widgets) {
-            if (widgets[i]._id === widgetId) {
-                widgets[i].url = "/uploads/" +filename;
-            }
-        }
+        // for (var i in widgets) {
+        //     if (widgets[i]._id === widgetId) {
+        //         widgets[i].url = "/uploads/" +filename;
+        //     }
+        // }
 
-        response
-            .redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId);
+        var url = "/uploads/" +filename;
+
+        widgetModel
+            .uploadImage(widgetId, url)
+            .then(
+                function(stat) {
+                    response
+                        .redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId);
+                },
+                function(error) {
+                    response.statusCode(404).send(error);
+                }
+            )
+
+
     }
 
     function createWidget(request, response) {
         var newWidget = request.body;
-        newWidget._id = (new Date()).getTime()+"";
-        widgets.push(newWidget);
-        response.send(newWidget);
+        var pageId = request.params.pageId;
+        // newWidget._id = (new Date()).getTime()+"";
+        // widgets.push(newWidget);
+        // response.send(newWidget);
+
+        widgetModel
+            .createWidget(pageId, newWidget)
+            .then(
+                function(widget) {
+                    response.json(widget);
+                },
+                function(error) {
+                    response.statusCode(400).send(error);
+                }
+            );
 
     }
 
     function findAllWidgetsForPage(request, response) {
         var pageId = request.params.pageId;
-        var resultSet = [];
-        for(var i in widgets) {
-            if(widgets[i].pageId === pageId) {
-                resultSet.push(widgets[i]);
-            }
-        }
-        response.json(resultSet);
+        // var resultSet = [];
+        // for(var i in widgets) {
+        //     if(widgets[i].pageId === pageId) {
+        //         resultSet.push(widgets[i]);
+        //     }
+        // }
+        // response.json(resultSet);
+
+        widgetModel
+            .findAllWidgetsForPage(pageId)
+            .then(
+                function(widgets) {
+                    response.json(widgets);
+                },
+                function(error) {
+                    response.statusCode(404).send(error);
+                }
+            );
     }
 
     function findWidgetById(request, response) {
         var id = request.params.widgetId
-        for (var i in widgets) {
-            if (widgets[i]._id === id) {
-                response.send( widgets[i]);
-                return;
-            }
-        }
-        response.status(404).send("Unable to find widget with id: " + id);
+        // for (var i in widgets) {
+        //     if (widgets[i]._id === id) {
+        //         response.send( widgets[i]);
+        //         return;
+        //     }
+        // }
+        // response.status(404).send("Unable to find widget with id: " + id);
+
+        widgetModel
+            .findWidgetById(id)
+            .then(
+                function(widget) {
+                    response.json(widget);
+                },
+                function(error) {
+                    response.statusCode(404).send(error);
+                }
+            );
     }
 
     function updateWidget(request, response) {
         var id = request.params.widgetId;
         var widget = request.body;
-        for(var i in widgets) {
-            if(widgets[i]._id === id) {
-                widgets[i] = widget;
-                response.send(200);
-                return;
-            }
-        }
-        response.send(400);
+        // for(var i in widgets) {
+        //     if(widgets[i]._id === id) {
+        //         widgets[i] = widget;
+        //         response.send(200);
+        //         return;
+        //     }
+        // }
+        // response.send(400);
+
+        widgetModel
+            .updateWidget(id, widget)
+            .then(
+                function(stat) {
+                    response.send(200);
+                },
+                function(error) {
+                    response.statusCode(404).send(error);
+                }
+            );
     }
 
     function deleteWidget(request, response) {
         var id = request.params.widgetId;
-        for(var i in widgets) {
-            if(widgets[i]._id === id) {
-                widgets.splice(i, 1);
-                response.send(200);
-                return;
-            }
-        }
-        response.send({});
+        // for(var i in widgets) {
+        //     if(widgets[i]._id === id) {
+        //         widgets.splice(i, 1);
+        //         response.send(200);
+        //         return;
+        //     }
+        // }
+        // response.send({});
+
+        widgetModel
+            .deleteWidget(id)
+            .then(
+                function(stat) {
+                    response.send(200);
+                },
+                function(error) {
+                    response.statusCode(404).send(error);
+                }
+            );
     }
 
 };

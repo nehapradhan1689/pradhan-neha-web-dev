@@ -14,7 +14,7 @@
             //console.log("Hello"+widgetType);
             //pageId, widget
             var newWidget = {
-                widgetType: widgetType
+                type: widgetType
             };
 
             WidgetService

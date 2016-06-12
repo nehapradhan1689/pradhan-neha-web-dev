@@ -1,6 +1,7 @@
 module.exports = function() {
     //MongoDB has no notion of what schemas are. This is enforced in the application.
     var mongoose = require('mongoose');
+    var PageSchema = require("../page/page.schema.server")();
 
     //Good practice to declare one schema per file
     //Primary key is by default managed by the DB.
@@ -9,6 +10,7 @@ module.exports = function() {
         _user: {type: mongoose.Schema.ObjectId, ref: "User"},
         name: {type: String, required: true},
         description: String,
+        pages: [PageSchema],
         //Creates a Date object out of the CPU time
         dateCreated: {type: Date, default: Date.now}
     }, {collection: "assignment.website"});
