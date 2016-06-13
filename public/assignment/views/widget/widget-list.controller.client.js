@@ -10,14 +10,13 @@
         vm.pageId = $routeParams.pid;
         vm.getSafeHtml = getSafeHtml;
         vm.getSafeUrl = getSafeUrl;
+        vm.reorderWidget = reorderWidget;
 
         function init() {
             WidgetService
                 .findWidgetsByPageId(vm.pageId)
                 .then(function(response) {
                     vm.widgets = response.data;
-                    $(".container")
-                        .sortable({axis: "y"});
                 });
         }
         init();
@@ -31,6 +30,20 @@
             var id = urlTokens[urlTokens.length - 1];
             var url = "https://www.youtube.com/embed/" + id;
             return $sce.trustAsResourceUrl(url);
+        }
+
+        function reorderWidget(start, end) {
+            WidgetService
+                .reorderWidget(vm.pageId, start, end)
+                .then(
+                    function(response) {
+                        //init();
+                        //console.log("ping!!");
+                    },
+                    function(error) {
+                        vm.error = "Unable to preserve order of widgets";
+                    }
+                );
         }
     }
 })();

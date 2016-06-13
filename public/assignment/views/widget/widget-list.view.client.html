@@ -18,54 +18,16 @@
     </div>
 </nav>
 
-<div class="container">
 
-    <div ng-repeat="widget in model.widgets" class="jga-widget">
-        <div class="jga-widget-spec">
-            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
-                <span class="glyphicon glyphicon-cog"></span>
-            </a>
-            <span class="glyphicon glyphicon-align-justify"></span>
-        </div>
 
-        <div ng-switch="widget.type">
-            <div ng-switch-when="HEADING" ng-switch="widget.size">
-                <h1 ng-switch-when="1">{{widget.text}}</h1>
-                <h2 ng-switch-when="2">{{widget.text}}</h2>
-                <h3 ng-switch-when="3">{{widget.text}}</h3>
-                <h4 ng-switch-when="4">{{widget.text}}</h4>
-                <h5 ng-switch-when="5">{{widget.text}}</h5>
-                <h6 ng-switch-when="6">{{widget.text}}</h6>
-            </div>
-            <div ng-switch-when="HTML">
-                <div ng-bind-html="model.getSafeHtml(widget)"></div>
-            </div>
-            <div ng-switch-when="IMAGE" class="widget-cnf">
-                <img ng-src="{{widget.url}}" width="{{widget.width}}"/>
-            </div>
-            <div ng-switch-when="YOUTUBE" class="youtube-widget">
-                <iframe width="{{widget.width}}" ng-src="{{model.getSafeUrl(widget)}}" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <div ng-switch-when="INPUT" class="widget-cnf">
-                <div ng-if="widget.formatted"
-                     text-angular
-                     ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
-                     ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
-                     ['indent','outdent'],['html']]">
-                </div>
-                <input ng-if="!widget.formatted && (!widget.rows || widget.rows===1)"
-                       placeholder="{{widget.textInput.placeholder}}"
-                       class="form-control"/>
-                <textarea ng-if="!widget.formatted && (widget.rows > 1)"
-                          rows="{{widget.rows}}"
-                          class="form-control">{{widget.text}}</textarea>
-            </div>
+    <!--<wam-sortable></wam-sortable>-->
 
-            <div ng-switch-default>Unable to render widget</div>
-        </div>
-    </div>
+{{model.widgets}}
 
-</div>
+    <wam-sortable model="model"
+                  callback="model.reorderWidget(start, end)"></wam-sortable>
+
+
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">

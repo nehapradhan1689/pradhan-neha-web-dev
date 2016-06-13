@@ -17,12 +17,30 @@ module.exports = function(app, models) {
         { "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
     ];
 
+    app.put("/page/:pageId/widget", reorderWidget);
     app.post ("/api/uploads", upload.single('myFile'), uploadImage);
     app.post("/api/page/:pageId/widget", createWidget);
     app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
     app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
+
+    function reorderWidget(request, response) {
+
+        var pageId = request.params.pageId;
+        var start = parseInt(request.query.start);
+        var end = parseInt(request.query.end);
+        widgetModel
+            .reorderWidget(pageId, start, end)
+            .then(
+                function(stat) {
+                    response.send(200);
+                },
+                function(error) {
+                    response.statusCode(400).send(error);
+                }
+            );
+    }
 
     function uploadImage(request, response) {
 

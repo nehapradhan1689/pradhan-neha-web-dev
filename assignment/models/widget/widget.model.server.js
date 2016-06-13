@@ -10,13 +10,25 @@ module.exports = function() {
         findWidgetById: findWidgetById,
         updateWidget: updateWidget,
         uploadImage: uploadImage,
+        reorderWidget: reorderWidget,
         deleteWidget: deleteWidget
     };
     return api;
     
     function createWidget(pageId, widget) {
         widget._page = pageId;
-        return Widget.create(widget);
+        return Widget
+            .find({"_page": pageId})
+            .then(
+                function(widgets) {
+                    widget.position = widgets.length;
+                    return Widget.create(widget);
+                },
+                function(error) {
+                    return null;
+                }
+            );
+
     }
     
     function findAllWidgetsForPage(pageId) {
@@ -42,6 +54,39 @@ module.exports = function() {
     
     function deleteWidget(widgetId) {
         return Widget.remove({_id: widgetId});
+    }
+
+    function reorderWidget(pageId, start, end) {
+        return Widget
+            .find(
+                {_page: pageId},
+                function(error, widgets) {
+                    widgets.forEach(
+                        function(widget) {
+                            if(start > end) {
+                                if(widget.position < start && widget.position >= end) {
+                                    widget.position++;
+                                    widget.save(function() {});
+                                }
+                                else if(widget.position == start) {
+                                    widget.position = end;
+                                    widget.save(function() {});
+                                }
+                            }
+                            else {
+                                if(widget.position > start && widget.position <= end) {
+                                    widget.position--;
+                                    widget.save(function() {});
+                                }
+                                else if(widget.position == start) {
+                                    widget.position = end;
+                                    widget.save(function() {});
+                                }
+                            }
+                        }
+                    );
+                }
+            );
     }
 
 }
