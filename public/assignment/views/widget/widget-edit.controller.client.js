@@ -22,6 +22,7 @@
         init();
 
         function updateWidget(updatedWidget) {
+            //console.log(updatedWidget.class);
             if(updatedWidget.name == null || updatedWidget.name == "") {
                 //console.log("Inside update website");
                 vm.error = "Please enter a valid widget name";

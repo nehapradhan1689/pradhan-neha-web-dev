@@ -46,6 +46,21 @@
             <div ng-switch-when="YOUTUBE" class="youtube-widget">
                 <iframe width="{{widget.width}}" ng-src="{{model.getSafeUrl(widget)}}" frameborder="0" allowfullscreen></iframe>
             </div>
+            <div ng-switch-when="INPUT" class="widget-cnf">
+                <div ng-if="widget.formatted"
+                     text-angular
+                     ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
+                     ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+                     ['indent','outdent'],['html']]">
+                </div>
+                <input ng-if="!widget.formatted && (!widget.rows || widget.rows===1)"
+                       placeholder="{{widget.textInput.placeholder}}"
+                       class="form-control"/>
+                <textarea ng-if="!widget.formatted && (widget.rows > 1)"
+                          rows="{{widget.rows}}"
+                          class="form-control">{{widget.text}}</textarea>
+            </div>
+
             <div ng-switch-default>Unable to render widget</div>
         </div>
     </div>

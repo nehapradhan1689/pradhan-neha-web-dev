@@ -8,10 +8,10 @@
     <div ng-switch-when="YOUTUBE">
         <ng-include src="'views/widget/widget-youtube.view.client.html'"></ng-include>
     </div>
-    <!--<div ng-switch-when="HTML">-->
-        <!--<ng-include src="'views/widget/widget-youtube.view.client.html'"></ng-include>-->
-    <!--</div>-->
-    <!--<div ng-switch-when="INPUT">-->
-        <!--<ng-include src="'views/widget/widget-youtube.view.client.html'"></ng-include>-->
-    <!--</div>-->
+    <div ng-switch-when="HTML">
+        <ng-include src="'views/widget/widget-html-edit.view.client.html'"></ng-include>
+    </div>
+    <div ng-switch-when="INPUT">
+        <ng-include src="'views/widget/widget-text-edit.view.client.html'"></ng-include>
+    </div>
 </div>

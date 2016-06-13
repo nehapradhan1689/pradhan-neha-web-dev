@@ -5,5 +5,5 @@
 //IIFE (Immediately Invoked Function Expression) is a design pattern
 
 (function() {
-    angular.module("WebAppMaker", ["ngRoute"]); //Top-level module, no dependency
+    angular.module("WebAppMaker", ["ngRoute", "textAngular"]); //Top-level module, no dependency
 })();
