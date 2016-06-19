@@ -3,20 +3,28 @@
     <div ng-if="model.error" class="alert alert-danger" role="alert">
         {{model.error}}
     </div>
-    <h1>Login</h1>
-    <input ng-model="username" type="text"
-           class="form-control"
-           placeholder="Username"/>
-    <input ng-model="password" type="password"
-           class="form-control"
-           placeholder="Password"/>
-    <a ng-click="model.login(username, password)"
-       class="btn btn-primary btn-block">Login</a>
-    <a href="#/register"
-       class="btn btn-success btn-block">Register</a>
-    <a href="/auth/facebook"
-       class="btn btn-primary btn-block">
-        <span class="fa fa-facebook-official"></span>
+
+        <h1>Login</h1>
+        <input name="username"
+               ng-model="username"
+               type="text"
+               autocorrect="off"
+               autocapitalize="off"
+               class="form-control"
+               placeholder="Username"/>
+        <input name="password"
+               ng-model="password"
+               type="password"
+               class="form-control"
+               placeholder="Password"/>
+        <a ng-click="model.login(username, password)"
+           name="login"
+           class="btn btn-primary btn-block form-control">Login</a>
+        <a href="#/register"
+           class="btn btn-success btn-block">Register</a>
+        <a href="/auth/facebook"
+           class="btn btn-primary btn-block">
+            <span class="fa fa-facebook-official"></span>
             Login with Facebook
-    </a>
+        </a>
 </div>
