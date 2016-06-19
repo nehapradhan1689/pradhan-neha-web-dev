@@ -32,10 +32,21 @@
                 controller: "RegisterController",
                 controllerAs: "model"
             })
+            .when("/user", {
+                templateUrl: "views/user/profile.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkLoggedIn
+                }
+            })
             .when("/user/:uid", {
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkLoggedIn
+                }
             })
             .when("/user/:uid/website", {
                 templateUrl: "views/website/website-list.view.client.html",
@@ -85,6 +96,34 @@
             .otherwise({
                 redirectTo: "/login"
             });
+
+        //$q allows to work with promises and asynchronous call
+        function checkLoggedIn(UserService, $location, $q, $rootScope) {
+
+            var deferred = $q.defer();
+
+            UserService
+                .loggedIn()
+                .then(
+                    function(response) {
+                        var user = response.data;
+                        if(user == '0') {
+                            $rootScope.currentUser = null;
+                            deferred.reject();
+                            $location.url("/login");
+                        }
+                        else {
+                            $rootScope.currentUser = user;
+                            deferred.resolve();
+                        }
+                    },
+                    function(error) {
+                        $location.url("/login");
+                    }
+                );
+
+            return deferred.promise;
+        }
 
     }
 })();

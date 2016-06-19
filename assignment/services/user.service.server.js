@@ -1,3 +1,9 @@
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var bcrypt = require("bcrypt-nodejs");
+
+
 module.exports = function(app, models) {
 
     var userModel = models.userModel;
@@ -9,11 +15,165 @@ module.exports = function(app, models) {
         {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
     ];
 
+    app.get("/auth/facebook", passport.authenticate('facebook'));
+    app.get("/auth/facebook/callback",
+        passport.authenticate('facebook', {
+            successRedirect: '/assignment/#/user',
+            failureRedirect: '/assignment/#/login'
+        }));
     app.post("/api/user", createUser);
+    app.get("/api/loggedIn", loggedIn);
+    app.post("/api/register", register);
+    app.post("/api/logout", logout);
+    app.post("/api/login", passport.authenticate('local'), login);
     app.get("/api/user", getUser);
     app.get("/api/user/:userId", findUserById);
     app.put("/api/user/:userId", updateUser);
     app.delete("/api/user/:userId", deleteUser);
+
+    passport.use(new LocalStrategy(localStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+
+    var facebookConfig = {
+        clientID     : process.env.FACEBOOK_CLIENT_ID,
+        clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL  : process.env.FACEBOOK_CALLBACK_URL
+    };
+
+    passport.use('facebook', new FacebookStrategy(facebookConfig, facebookLogin));
+
+
+    function localStrategy(username, password, done) {
+        userModel
+            .findUserByUsername(username)
+            .then(
+                function(user) {
+                    if(user && bcrypt.compareSync(password, user.password)) {
+                        done(null, user);
+                    }
+                    else {
+                        done(null, false);
+                    }
+                },
+                function(error) {
+                    done(null, error);
+                }
+            );
+    }
+
+    function serializeUser(user, done) {
+        done(null, user);
+    }
+
+    function deserializeUser(user, done) {
+        userModel
+            .findUserById(user._id)
+            .then(
+                function(user){
+                    done(null, user);
+                },
+                function(err){
+                    done(err, null);
+                }
+            );
+    }
+
+    function register(request, response) {
+        var username = request.body.username;
+        var password = request.body.password;
+
+        userModel
+            .findUserByUsername(username)
+            .then(
+                function(user) {
+                    if(user){
+                        // console.log("Server service");
+                        // console.log(user);
+                        response.status(400).send("Username already in use");
+
+                        return;
+                    }
+                    else {
+                        request.body.password = bcrypt.hashSync(request.body.password);
+                        return userModel.createUser(request.body);
+                    }
+                },
+                function(error) {
+                    response.send(error);
+                }
+            )
+            .then(
+                function(user) {
+                    if(user) {
+                        //Utility function provided by passport
+                        request.login(user, function(error) {
+                            if(error) {
+                                response.status(400).send(error);
+                            }
+                            else {
+                                response.json(user);
+                            }
+                        });
+                    }
+                },
+                function(error) {
+                    response.status(400).send(error);
+                }
+            );
+    }
+    
+    function facebookLogin(token, refreshToken, profile, done) {
+        userModel
+            .findFacebookUser(profile.id)
+            .then(
+                function(facebookUser) {
+                    if(facebookUser) {
+                        return done(null, facebookUser);
+                    }
+                    else {
+                        facebookUser = {
+                            username: profile.displayName.replace(/ /g, ''),
+                            facebook: {
+                                token: token,
+                                id: profile.id,
+                                displayName: profile.displayName
+                            }
+                        };
+                        userModel
+                            .createUser(facebookUser)
+                            .then(
+                                function(user) {
+                                    done(null, user);
+                                }
+                            );
+                    }
+                }
+            );
+    }
+    
+    function loggedIn(request, response) {
+        if(request.isAuthenticated()) {
+            response.json(request.user);
+        }
+        else {
+            response.send('0');
+        }
+    }
+    
+    function logout(request, response) {
+        //Function added by passport to the request object to invalidate the session,
+        // cookie and remove the current logged in user from the session.
+        request.logout();
+        
+        response.send(200);
+    }
+
+    function login(request, response) {
+        //Passport adds the current user to the request.
+        var user = request.user;
+        response.json(user);
+    }
 
     function deleteUser(request, response) {
         var id = request.params.userId;
@@ -97,7 +257,7 @@ module.exports = function(app, models) {
         //console.log(username);
         //console.log(password);
         if(username && password) {
-            findUserByCredentials(username, password, response);
+            findUserByCredentials(username, password, response, request);
             }
         else if(username) {
             findUserByUsername(username, response);
@@ -107,7 +267,7 @@ module.exports = function(app, models) {
         }
     }
 
-    function findUserByCredentials(username, password, response) {
+    function findUserByCredentials(username, password, response, request) {
         // for(var i in users) {
         //     if(users[i].username === username && users[i].password === password){
         //         response.send(users[i]);
@@ -120,13 +280,15 @@ module.exports = function(app, models) {
             .findUserByCredentials(username, password)
             .then(
                 function(user) {
+                    // console.log(request.session);
+                    request.session.currentUser = user;
                     response.json(user);
                 },
                 function(error) {
                     response.statusCode(404).send(error);
 
                 }
-            )
+            );
     }
 
     function findUserByUsername(username, response) {
@@ -151,6 +313,8 @@ module.exports = function(app, models) {
     
     function findUserById(request, response) {
         var id = request.params.userId;
+
+        //console.log(request.session.currentUser);
         
         userModel
             .findUserById(id)

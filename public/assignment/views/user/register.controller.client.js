@@ -9,22 +9,6 @@
         vm.createUser = createUser;
 
         function createUser(username, password, verifypassword) {
-            // if(password != verifypassword) {
-            //     vm.error = "Passwords do not match";
-            // }
-            // else if(UserService.findUserByUsername(username)) {
-            //     vm.error = "Username already exists";
-            // }
-            // else{
-            //     var newUser = UserService.createUser(user);
-            //     if(newUser) {
-            //         $location.url("/user/"+newUser._id);
-            //     }
-            //     else {
-            //         vm.error = "Unable to create user";
-            //     }
-            // }
-
             if (username == null || username == "") {
                 vm.error = "Please enter username";
             }
@@ -43,26 +27,15 @@
                     password: password
                 };
                 UserService
-                    .findUserByUsername(username)
-                    .then(function(response) {
-                        var userReturned = response.data;
-                        if(userReturned) {
-                            vm.error = "Username already exists";
-                        }
-                        else{
-                            UserService
-                                .createUser(user)
-                                .then(function(response) {
-                                    var newUser = response.data;
-                                    if(newUser) {
-                                        $location.url("/user/"+newUser._id);
-                                    }
-                                    else {
-                                        vm.error = "Unable to create user";
-                                    }
-                                });
-                        }
-                    });
+                   .register(user)
+                   .then(
+                       function(response) {
+                       var newUser = response.data;
+                       $location.url("/user/"+newUser._id);
+                       },
+                       function(error) {
+                       vm.error = error.data;
+                       });
             }
         }
     }

@@ -8,6 +8,10 @@
 
         var api = {
             createUser: createUser,
+            register: register,
+            login: login,
+            logout: logout,
+            loggedIn: loggedIn,
             findUserById: findUserById,
             findUserByCredentials: findUserByCredentials,
             findUserByUsername: findUserByUsername,
@@ -16,6 +20,27 @@
         };
 
         return api;
+
+        function register(user) {
+            return $http.post("/api/register", user);
+        }
+        
+        function loggedIn() {
+            return $http.get("/api/loggedIn");
+        }
+
+        function logout() {
+            return $http.post("/api/logout");
+        }
+
+        function login(username, password) {
+            var user = {
+                username: username,
+                password: password
+            };
+            //console.log(user);
+            return $http.post("/api/login", user);
+        }
         
         function findUserByCredentials(username, password) {
             var url = "/api/user?username=" + username  + "&password=" + password;

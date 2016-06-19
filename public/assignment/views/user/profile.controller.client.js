@@ -4,13 +4,16 @@
         .controller("ProfileController", ProfileController);
 
     //$routeParams is a map of all the path parameters or query strings in the URL which can be retrieved by name.
-    function ProfileController($routeParams, UserService, $location) {
+    function ProfileController($routeParams, UserService, $location, $rootScope) {
         var vm = this;
 
         vm.updateUser = updateUser;
         vm.unregister = unregister;
+        vm.logout = logout;
 
-        var id = $routeParams.uid;
+        // var id = $routeParams.uid;
+
+        var id = $rootScope.currentUser._id;
 
         function init() {
             UserService
@@ -20,6 +23,20 @@
                 });
         }
         init();
+        
+        function logout() {
+            
+            UserService
+                .logout()
+                .then(
+                    function(response){
+                        $location.url("/login");
+                    },
+                    function(error) {
+                        $location.url("/login");
+                    }
+                );
+        }
 
         function unregister() {
             UserService
