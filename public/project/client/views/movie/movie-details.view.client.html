@@ -1,0 +1,289 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-inner">
+            <!--<a class="navbar-brand topnav" href="#">-->
+                <!--<img src="http://img.informer.com/icons/png/48/35/35971.png"/>-->
+            <!--</a>-->
+            <a class="navbar-brand topnav" href="#/home">
+                <span class="appTitle">Flix</span>
+            </a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".headerCollapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse headerCollapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-show="model.user!=null">
+                    <a class="page-scroll" href="#/user">
+                        <span class="headerLink">{{model.user.username}}</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#/home">
+                        <span class="headerLink">Home</span>
+                    </a>
+                </li>
+                <li ng-hide="model.user!=null">
+                    <a class="page-scroll" href="#/login">
+                        <span class="headerLink">Login</span>
+                    </a>
+                </li>
+                <li ng-hide="model.user!=null">
+                    <a class="page-scroll" href="#/register">
+                        <span class="headerLink">Register</span>
+                    </a>
+                </li>
+                <li ng-show="model.user!=null">
+                    <a class="page-scroll" ng-click="model.logout()">
+                        <span class="headerLink">Logout</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<div class="container">
+    <div class="input-group">
+        <input ng-model="searchText" type="text" class="form-control" placeholder="Search Movies">
+	<span class="input-group-btn">
+	<a ng-click="model.searchMovies(searchText)" class="btn btn-default" type="button">
+		<span class="glyphicon glyphicon-search"></span>
+	</a>
+	</span>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row row-eq-height">
+        <div class="col-xs-12 col-sm-7 col-md-6">
+            <img class="img-fluid img-responsive" ng-src="{{model.movie.poster_path}}"/>
+        </div>
+        <div class="col-xs-12 col-sm-5 col-md-6">
+            <h2><b>{{model.movie.title}}</b></h2>
+            <div ng-if="model.addToWLMessage" class="alert alert-danger" role="alert">
+                {{model.addToWLMessage}}
+            </div>
+            <a ng-if="!model.isInWatchList"
+               ng-click="model.addMovieToWatchList()"
+               class="watchList-btn"><span>+ Add to Watch List</span></a>
+            <a ng-if="model.isInWatchList"
+               ng-click="model.removeMovieFromWatchList()"
+               class="watchList-btn remwatchList"><span>Remove From Watch List</span></a>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4><b>Rating:</b> {{model.movie.vote_average}}/10</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4><b>Release Date:</b> {{model.movie.release_date}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4>
+                                <b>Genre:</b>
+                            <span ng-repeat="genre in model.movie.genres | limitTo:2">
+                                <span class="label label-default" >
+                                    {{genre.name}}
+                                </span>&nbsp;
+                            </span>
+                                <br ng-if="model.movie.genres.length==0"/>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4>
+                                <span class="glyphicon glyphicon-time">{{model.movie.runtime}} minutes</span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4><b>Videos/Trailers</b></h4>
+            <div class="row">
+                <div class="col-xs-12 col-md-4" ng-repeat="url in model.movie.videoURL">
+                        <iframe width="100%" ng-src="{{url}}" frameborder="0" allowfullscreen></iframe>
+                     <!-- Looping required -->
+                </div>
+            </div>
+
+            <h4><b>Cast</b></h4>
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="list-inline">
+                        <li class="cast-div" ng-repeat="cast in model.movie.credits.cast"
+                            ng-if="cast.profile_path!=null && cast.castImageURL!=null">
+                            <a ng-click="model.getCastProfile(cast.id)">
+                                <img ng-src={{cast.castImageURL}}"/>
+                            </a>
+                            <a class="title" ng-click="model.getCastProfile(cast.id)">
+                                {{cast.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4><b>Similar Movies</b></h4>
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="list-inline">
+                        <li ng-repeat="movie in model.movie.similarMovies">
+                            <a ng-click="model.getMovieInfo(movie.id)">
+                                <img class="img-thumbnail" ng-src="{{movie.similarImageURL}}"/>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                    <!-- Looping required -->
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <h2><b>Overview:</b></h2>
+            <h5>{{model.movie.overview}}</h5>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4><b>Reviews</b></h4>
+                    <div ng-if="model.alertToLogin" class="alert alert-danger" role="alert">
+                        {{model.alertToLogin}}
+                    </div>
+                        <div ng-repeat="review in model.reviews">
+                            <div class="panel panel-default">
+                                <div ng-if="model.user._id == review.user.userId && model.edit == false"
+                                     class="panel-body reviewPanelGrp">
+                                    <p>
+                                        <h4><b>{{review.title}}</b></h4>
+                                        <a class="reviewUsername" ng-click="model.getUserProfile(review.user.userId)">
+                                            {{review.user.username}}
+                                        </a>
+                                        <span class="reviewDate">{{review.dateCreated | date : 'mediumDate'}}</span>
+                                        <h5>{{review.description}}</h5>
+
+                                    </p>
+                                    <a class="btn btn-sm btn-danger pull-right deleteReviewBtn" role="button"
+                                       ng-click="model.deleteReview(review._id)">
+                                        Delete Review
+                                    </a>
+                                    <a class="btn btn-sm btn-warning pull-right" role="button"
+                                       ng-click="model.editReview()">
+                                        Edit Review
+                                    </a>
+
+                                </div>
+                                <div ng-if="model.user._id==review.user.userId && model.edit==true"
+                                     class="panel-body reviewPanelGrp">
+                                    <!--<a ng-click="model.getUserProfile(review.user.userId)">-->
+                                        <!--{{review.user.username}}-->
+                                    <!--</a>-->
+
+                                    <input type="text"
+                                           class="form-control reviewSection"
+                                           value="{{review.title}}"
+                                           ng-model="review.title"/>
+                                    <textarea class="form-control reviewSection"
+                                              value="{{review.description}}"
+                                              ng-model="review.description"></textarea>
+                                    <a class="btn btn-sm btn-danger pull-right deleteReviewBtn"
+                                       role="button"
+                                       ng-click="model.cancelReview()">
+                                        Cancel
+                                    </a>
+                                    <a class="btn btn-sm btn-success pull-right"
+                                       role="button"
+                                       ng-click="model.updateReview(review._id, review.title, review.description)">
+                                        Update
+                                    </a>
+
+                                    <!--<input type="text" value="{{review.title}}" ng-model="review.title"/>-->
+                                    <!--<input type="text" value="{{review.description}}" ng-model="review.description"/>-->
+                                    <!--<a href="" class="btn btn-success" role="button"-->
+                                       <!--ng-click="model.updateReview(review._id, review.title, review.description)">-->
+                                        <!--Update-->
+                                    <!--</a>-->
+                                    <!--<a href="" class="btn btn-danger" role="button"-->
+                                       <!--ng-click="model.cancelReview()">-->
+                                        <!--Cancel-->
+                                    <!--</a>-->
+                                </div>
+                                <div ng-if="model.user._id != review.user.userId"
+                                     class="panel-body reviewPanelGrp">
+                                    <!--<a ng-click="model.getUserProfile(review.user.userId)">-->
+                                        <!--{{review.user.username}}-->
+                                    <!--</a>-->
+                                    <!--<h4>{{review.title}}</h4>-->
+                                    <!--<h5>{{review.description}}</h5>-->
+                                    <p>
+                                    <h4><b>{{review.title}}</b></h4>
+                                    <a class="reviewUsername" ng-click="model.getUserProfile(review.user.userId)">
+                                        {{review.user.username}}
+                                    </a>
+                                    <span class="reviewDate">{{review.dateCreated | date : 'mediumDate'}}</span>
+                                    <h5>{{review.description}}</h5>
+
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default reviewPanel">
+                <h4 class="reviewHeader"><b>Add a Review</b></h4>
+                <div ng-if="model.error" class="alert alert-danger" role="alert">
+                    {{model.error}}
+                </div>
+                <div class="row panel-body">
+                    <div class="col-xs-12">
+                        <input type="text"
+                               class="form-control addReview"
+                               ng-model="model.defReview.title"
+                               placeholder="Title"/>
+                        <textarea class="form-control addReview"
+                              ng-model="model.defReview.comment"
+                              placeholder="Write a review"></textarea>
+                        <a ng-click="model.createReview(model.defReview.title, model.defReview.comment)"
+                           class="btn btn-primary pull-right">Submit Review</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <a class="navbar-brand" href="#"></a>
+
+        </div>
+    </div>
+</nav>

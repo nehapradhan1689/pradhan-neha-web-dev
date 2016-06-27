@@ -23,11 +23,10 @@ app.use(express.static(__dirname + '/public'));
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
 var port      = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
+var project = require("./project/app");
+project(app);
+
 var assignment = require("./assignment/app"); //Loads the module created in the given path
 assignment(app);
-
-
-
-
 
 app.listen(port, ipaddress);

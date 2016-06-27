@@ -1,0 +1,106 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-inner">
+            <!--<a class="navbar-brand topnav" href="#">-->
+                <!--<img src="http://img.informer.com/icons/png/48/35/35971.png"/>-->
+            <!--</a>-->
+            <a class="navbar-brand topnav" href="#/home">
+                <span class="appTitle">Flix</span>
+            </a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".headerCollapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse headerCollapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-show="model.user!=null">
+                    <a class="page-scroll" href="#/user">
+                        <span class="headerLink">{{model.user.username}}</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#/home">
+                        <span class="headerLink">Home</span>
+                    </a>
+                </li>
+                <li ng-hide="model.user!=null">
+                    <a class="page-scroll" href="#/login">
+                        <span class="headerLink">Login</span>
+                    </a>
+                </li>
+                <li ng-hide="model.user!=null">
+                    <a class="page-scroll" href="#/register">
+                        <span class="headerLink">Register</span>
+                    </a>
+                </li>
+                <li ng-show="model.user!=null">
+                    <a class="page-scroll" ng-click="model.logout()">
+                        <span class="headerLink">Logout</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<div class="container">
+    <div class="input-group">
+        <input ng-model="searchText" type="text" class="form-control" placeholder="Search Movies">
+	<span class="input-group-btn">
+	<a ng-click="model.searchMovies(searchText)" class="btn btn-default" type="button">
+		<span class="glyphicon glyphicon-search"></span>
+	</a>
+	</span>
+    </div>
+</div>
+
+   <div class="container-fluid" ng-if="model.query">
+       <h3>Showing {{model.length}} results for "{{model.query}}"</h3>
+       <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat = "movie in model.movies" >
+           <div class="thumbnail">
+               <div class="embed-responsive embed-responsive-4by3" ng-if = "movie.poster_path">
+                   <a ng-click="model.getMovieDetails(movie.id)">
+                       <img ng-src="{{movie.poster_path}}"/>
+                   </a>
+               </div>
+               <div class="caption">
+                   <a ng-click="model.getMovieDetails(movie.id)">
+                       <h5>{{movie.title| limitTo:35}}</h5>
+                   </a>
+                   <h6>Release Date: {{movie.release_date | date:'d MMM, y'}}</h6>
+                   <h4>
+                        <span ng-repeat="id in movie.genre_ids | limitTo:2">
+                            <span class="label label-default" >
+                                {{model.getGenreName(id)}}
+                            </span>&nbsp;&nbsp;
+                        </span>
+                       <br ng-if="movie.genre_ids.length==0"/>
+                   </h4>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <a class="navbar-brand" href="#"></a>
+            <p class="navbar-text pull-right">
+                <a href="#/user/{{model.userId}}" class="navbar-link">
+                    <span class="glyphicon glyphicon-user text-primary"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>

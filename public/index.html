@@ -1,12 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Web Dev Course Home Page</title>
+    <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <!-- Angular routing module -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Home Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <!--<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">-->
+
+    <!-- Custom styles for this template -->
+    <!-- Custom Fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <!-- Custom CSS -->
+    <link href="css/myStyle.css" rel="stylesheet"/>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+
 </head>
 <body>
-    <h1>Web Dev Course Home Page</h1>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-inner">
+            <a class="navbar-brand topnav" href="#">Neha Pradhan</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".headerCollapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
 
+            <div class="collapse navbar-collapse headerCollapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#projects">Projects</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#assignment">Assignment</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<div class="container">
     <p>
         Neha Pradhan
     </p>
@@ -26,5 +92,34 @@
             <a href="https://github.com/nehapradhan1689/pradhan-neha-web-dev.git">Neha's public repository at GitHub.com</a>
         </li>
     </ul>
+</div>
+
+
+<footer>
+    <div class="container" id="top-div">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="list-inline">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="footer-menu-divider">⋅</li>
+                    <li>
+                        <a href="#about">About</a>
+                    </li>
+                    <li class="footer-menu-divider">⋅</li>
+                    <li>
+                        <a href="#projects">Projects</a>
+                    </li>
+                    <li class="footer-menu-divider">⋅</li>
+                    <li>
+                        <a href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted small">Copyright © Neha Pradhan. All Rights Reserved</p>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

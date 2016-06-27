@@ -1,0 +1,100 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-inner">
+            <!--<a class="navbar-brand topnav" href="#">-->
+            <!--<img src="http://img.informer.com/icons/png/48/35/35971.png"/>-->
+            <!--</a>-->
+            <a class="navbar-brand topnav" href="#/home">
+                <span class="appTitle">Flix</span>
+            </a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".headerCollapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse headerCollapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="page-scroll" href="#/home">
+                        <span class="headerLink">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#/login">
+                        <span class="headerLink">Login</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<div class="container">
+    <div ng-if="model.error" class="alert alert-danger" role="alert">
+        {{model.error}}
+    </div>
+
+    <h1>Register</h1>
+    <form name="registerForm" novalidate>
+        <label>
+            <input ng-model="username"
+                   name="username"
+                   type="text"
+                   class="form-control"
+                   placeholder="Username"
+                   ng-class="{red: (registerForm.username.$invalid && registerForm.$submitted)}"
+                   required/>
+            <span ng-show="registerForm.username.$invalid && registerForm.$submitted"
+                  class="error-display">Please enter a username</span>
+        </label>
+        <label>
+            <input ng-model="password"
+                   name="password"
+                   type="password"
+                   class="form-control"
+                   placeholder="Password"
+                   ng-class="{red: (registerForm.username.$invalid && registerForm.$submitted)}"
+                   required/>
+            <span ng-show="registerForm.password.$invalid && registerForm.$submitted"
+                  class="error-display">Please enter a password</span>
+        </label>
+        <label>
+            <input ng-model="verifypassword"
+                   name="verifypassword"
+                   type="password"
+                   class="form-control"
+                   placeholder="Verify Password"
+                   ng-class="{red: (registerForm.username.$invalid && registerForm.$submitted)}"
+                   required/>
+            <span ng-show="registerForm.verifypassword.$invalid && registerForm.$submitted"
+                  class="error-display">Please verify password</span>
+        </label>
+        <button ng-click="model.createUser(username, password, verifypassword)"
+                type="submit"
+                class="btn btn-primary btn-block">Register</button>
+        <a href="#/login"
+           class="btn btn-danger btn-block">Cancel</a>
+    </form>
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <a class="navbar-brand" href="#"></a>
+            <p class="navbar-text pull-right">
+                <a href="#/user/{{model.userId}}" class="navbar-link">
+                    <span class="glyphicon glyphicon-user text-primary"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>

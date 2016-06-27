@@ -1,0 +1,88 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-inner">
+            <!--<a class="navbar-brand topnav" href="#">-->
+            <!--<img src="http://img.informer.com/icons/png/48/35/35971.png"/>-->
+            <!--</a>-->
+            <a class="navbar-brand topnav" href="#/home">
+                <span class="appTitle">Flix</span>
+            </a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".headerCollapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse headerCollapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="page-scroll" href="#/home">
+                        <span class="headerLink">Home</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<div class="container">
+    <!-- ng-show and ng-if takes a boolean expression and checks if it is truthy. -->
+    <div ng-if="model.error" class="alert alert-danger" role="alert">
+        {{model.error}}
+    </div>
+
+    <h1>Login</h1>
+
+    <form name="loginForm" id="login-form" novalidate>
+        <label class="loginLabel" name="login-label">
+            <input name="username"
+                   ng-model="username"
+                   type="text"
+                   autocorrect="off"
+                   autocapitalize="off"
+                   class="form-control"
+                   placeholder="Username"
+                   ng-class="{red: (loginForm.username.$invalid && loginForm.$submitted)}"
+                   required/>
+            <span ng-show="loginForm.username.$invalid && loginForm.$submitted"
+                  class="error-display">Please enter a username</span>
+        </label>
+        <label class="loginLabel">
+            <input name="password"
+                   ng-model="password"
+                   type="password"
+                   class="form-control"
+                   placeholder="Password"
+                   ng-class="{red: (loginForm.password.$invalid && loginForm.$submitted)}"
+                   required/>
+            <span ng-show="loginForm.password.$invalid && loginForm.$submitted"
+                  class="error-display">Please enter password</span>
+        </label>
+        <button ng-click="model.login(username, password)"
+                type="submit"
+                name="login"
+                class="btn btn-primary btn-block form-control">Login</button>
+        <a href="#/register"
+           class="btn btn-success btn-block">Register</a>
+        <a href="/auth/google"
+        class="btn btn-danger btn-block">
+        <span class="fa fa-google"></span>
+        Login with Google
+        </a>
+    </form>
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <a class="navbar-brand" href="#"></a>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,120 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-inner">
+            <!--<a class="navbar-brand topnav" href="#">-->
+            <!--<img src="http://img.informer.com/icons/png/48/35/35971.png"/>-->
+            <!--</a>-->
+            <a class="navbar-brand topnav" href="#/home">
+                <span class="appTitle">Flix</span>
+            </a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".headerCollapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse headerCollapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-show="model.user!=null">
+                    <a class="page-scroll" href="#/user">
+                        <span class="headerLink">{{model.user.username}}</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#/home">
+                        <span class="headerLink">Home</span>
+                    </a>
+                </li>
+                <li ng-hide="model.user!=null">
+                    <a class="page-scroll" href="#/login">
+                        <span class="headerLink">Login</span>
+                    </a>
+                </li>
+                <li ng-hide="model.user!=null">
+                    <a class="page-scroll" href="#/register">
+                        <span class="headerLink">Register</span>
+                    </a>
+                </li>
+                <li ng-show="model.user!=null">
+                    <a class="page-scroll" ng-click="model.logout()">
+                        <span class="headerLink">Logout</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<div class="container">
+    <div class="input-group">
+        <input ng-model="searchText" type="text" class="form-control" placeholder="Search Movies">
+	<span class="input-group-btn">
+	<a ng-click="model.searchMovies(searchText)" class="btn btn-default" type="button">
+		<span class="glyphicon glyphicon-search"></span>
+	</a>
+	</span>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-5 col-md-4">
+            <img class="img-fluid img-responsive" ng-src="{{model.person.profile_path}}"/>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-8">
+             <h2><b>{{model.person.name}}</b></h2>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <h4><b>Place of birth:</b> {{model.person.place_of_birth}}</h4>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <h4><b>Date of birth:</b> {{model.person.birthday}}</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h2><b>Biography:</b></h2>
+                    <h5>{{model.person.biography}}</h5>
+                </div>
+            </div>
+            <h2><b>Movies Appeared In:</b></h2>
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="list-inline">
+                        <li class="cast-div"
+                            ng-repeat="movie in model.person.movie_credits.cast"
+                            ng-if="movie.poster_path!=null">
+                            <a ng-click="model.getMovieInfo(movie.id)">
+                                <img ng-src={{movie.poster_path}}"/>
+                            </a>
+                            <a class="title" ng-click="model.getMovieInfo(movie.id)">
+                                {{movie.title}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <a class="navbar-brand" href="#"></a>
+
+        </div>
+    </div>
+</nav>

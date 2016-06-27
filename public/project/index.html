@@ -1,10 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<!-- Declares the document as an Angular single page document. -->
+<html lang="en" ng-app="Flix">
 <head>
     <meta charset="UTF-8">
-    <title>Project Home Page</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="initial-scale=1.25, user-scalable = no">
+    <title>Flix</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/project/client/css/style.css" rel="stylesheet"/>
+    <link href="../css/jquery-ui.css" rel="stylesheet"/>
+    <link href="../css/textAngular.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js" integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo=" crossorigin="anonymous"></script>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/jquery-mobile-sortable.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- Angular routing module -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+    <!--<script src="https://apis.google.com/js/platform.js" async defer></script>-->
+    <script src="../js/textAngular-rangy.min.js"></script>
+    <script src="../js/textAngular-sanitize.min.js"></script>
+    <script src="../js/textAngular.min.js"></script>
+    <script src="client/js/xmltojson.js"></script>
+    <!-- Create and declare angular application on javascript side-->
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+    <!-- Load the controller javascript file. -->
+    <script src="client/views/user/login.controller.client.js"></script>
+    <script src="client/views/user/register.controller.client.js"></script>
+    <script src="client/views/user/profile.controller.client.js"></script>
+    <script src="client/views/user/other-profile.controller.client.js"></script>
+    <script src="client/views/home/home.controller.client.js"></script>
+    <script src="client/views/movie/movie-details.controller.client.js"></script>
+    <script src="client/views/movie/search-result.controller.client.js"></script>
+    <script src="client/views/movie/cast-profile.controller.client.js"></script>
+    <script src="client/services/flixuser.service.client.js"></script>
+    <script src="client/services/flix.service.client.js"></script>
+    <script src="client/services/review.service.client.js"></script>
+
 </head>
 <body>
-    <h1>Project Home Page</h1>
+
+<div ng-view></div>
+
 </body>
 </html>

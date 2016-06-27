@@ -1,0 +1,254 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-inner">
+            <!--<a class="navbar-brand topnav" href="#">-->
+            <!--<img src="http://img.informer.com/icons/png/48/35/35971.png"/>-->
+            <!--</a>-->
+            <a class="navbar-brand topnav" href="#/home">
+                <span class="appTitle">Flix</span>
+            </a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".headerCollapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse headerCollapse">
+            <ul class="nav navbar-nav navbar-right">
+
+                <li ng-show="model.user!=null">
+                    <a class="page-scroll" href="#/user">
+                        <span class="headerLink">{{model.currentUser.username}}</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#/home">
+                        <span class="headerLink">Home</span>
+                    </a>
+                </li>
+                <li ng-show="model.user!=null">
+                    <a class="page-scroll" ng-click="model.logout()">
+                        <span class="headerLink">Logout</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="thumbnail" id="imageTn">
+                <img ng-src="{{model.user.url}}" width="60%"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div id="tabs">
+                <ul class="nav nav-pills nav-justified pillPad">
+                    <li class="active">
+                        <a data-toggle="pill" data-target="#details">
+                            User Details
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="pill" data-target="#followers">
+                            Followers
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="pill" data-target="#following">
+                            Following
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="pill" data-target="#movies">
+                            Rated/Reviewed
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="pill" data-target="#watchlist">
+                            Watchlist
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <!--{{model.user}}-->
+
+                    <!--{{model.currentUser}}-->
+
+                    <div id="details" class="tab-pane fade in active">
+                        <h3 ng-if="model.user.firstName">{{model.user.firstName}}'s Profile</h3>
+                        <div class="panel panel-default">
+                            <div class="panel-body followersPanel">
+                                <div class="row">
+                                    <div class="col-sm-12 col-sm-5 col-md-6">
+
+                                        <img ng-if="model.user.url" ng-src="{{model.user.url}}" width="40%"/>
+                                        <img ng-if="!model.user.url" src= "client/images/UserImage.png" width="40%"/>
+
+                                    </div>
+                                    <div class="col-sm-12 col-sm-7 col-md-6">
+
+                                        <form name="profileForm">
+                                           <p>
+                                               <span class="userDetails"><b>Username:</b> {{model.user.username}}</span>
+                                           </p>
+                                            <p>
+                                                <span class="userDetails"><b>Email:</b> {{model.user.email}}</span>
+                                            </p>
+                                            <p>
+                                                <span class="userDetails"><b>Name:</b> {{model.user.firstName}} {{model.user.lastName}}</span>
+                                            </p>
+                                            <p>
+                                                <span class="userDetails"><b>DOB:</b> {{model.user.dob | date : format : 'longDate'}}</span>
+                                            </p>
+                                            <a ng-if="model.isFollowing"
+                                               ng-click="model.unfollowUser()"
+                                               class="btn btn-danger">Unfollow {{model.user.username}}</a>
+                                            <a ng-if="!model.isFollowing"
+                                               ng-click="model.followUser()"
+                                               class="btn btn-success"> Follow {{model.user.username}}</a>
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="followers" class="tab-pane fade">
+                        <!--<div class="col-xs-12 col-sm-6 col-md-4" ng-repeat = "follower in model.user.followers">-->
+                            <!--<h4>{{follower.username}}</h4>-->
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div ng-repeat="follower in model.user.followers">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body followersPanel">
+                                                <a ng-click="model.getUserProfile(follower.userId)">
+                                                    <h4>{{follower.username}}</h4>
+                                                </a>
+                                                <a ng-click="model.getUserProfile(follower.userId)"
+                                                   class="btn btn-sm btn-success pull-right">Goto {{follower.username}}'s profile </a>
+                                                <!--<a ng-if="!model.isFollowing(follower.userId)"-->
+                                                   <!--ng-click="model.followUser(follower.userId, follower.username)"-->
+                                                   <!--class="btn btn-sm btn-success pull-right">Follow {{follower.username}}</a>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <!--</div>-->
+                    </div>
+
+                    <div id="following" class="tab-pane fade">
+                        <!--<div class="col-xs-12 col-sm-6 col-md-4" ng-repeat = "following in model.user.following">-->
+                            <!--<h4>{{following.username}}</h4>-->
+                        <!--</div>-->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div ng-repeat="following in model.user.following">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body followersPanel">
+                                            <a ng-click="model.getUserProfile(following.userId)">
+                                                <h4>{{following.username}}</h4>
+                                            </a>
+                                            <a ng-click="model.getUserProfile(following.userId)"
+                                               class="btn btn-sm btn-danger pull-right">Goto {{following.username}}'s Profile</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="movies" class="tab-pane fade">
+                        <!--<div class="col-xs-12 col-sm-6 col-md-4" ng-repeat = "movie in model.user.moviesReviewed">-->
+                            <!--<h4>{{movie.movieId}}</h4>-->
+                        <!--</div>-->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div ng-repeat="movie in model.user.moviesReviewed">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body followersPanel">
+                                            <a ng-click="model.getMovieInfo(movie.movieId)">
+                                                <img ng-src="{{movie.moviePoster}}" width="10%">
+                                            </a>
+                                            <a ng-click="model.getMovieInfo(movie.movieId)">
+                                                    <span class="glyphicon glyphicon-eye-open pull-right">
+                                                        <b>{{movie.movieTitle}}</b>
+                                                    </span>
+                                            </a>
+                                            <!--<a ng-if="model.isFollowing(following.userId)"-->
+                                            <!--ng-click="model.unfollowUser(following.userId)"-->
+                                            <!--class="btn btn-sm btn-danger pull-right">Unfollow {{following.username}}</a>-->
+                                            <!--<a ng-if="!model.isFollowing(follower.userId)"-->
+                                            <!--ng-click="model.followUser(follower.userId, follower.username)"-->
+                                            <!--class="btn btn-sm btn-success pull-right">Follow {{follower.username}}</a>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="watchlist" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div ng-repeat="movie in model.user.watchlist">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body followersPanel">
+                                            <a ng-click="model.getMovieInfo(movie.apiMovieId)">
+                                                <img ng-src="{{movie.moviePoster}}" width="10%">
+                                            </a>
+                                            <a ng-click="model.getMovieInfo(movie.apiMovieId)">
+                                                &nbsp;
+                                                    <span class="glyphicon glyphicon-eye-open pull-right">
+                                                        <b>{{movie.movieTitle}}</b>
+                                                    </span>
+                                            </a>
+                                            <!--<a ng-if="model.isFollowing(following.userId)"-->
+                                            <!--ng-click="model.unfollowUser(following.userId)"-->
+                                            <!--class="btn btn-sm btn-danger pull-right">Unfollow {{following.username}}</a>-->
+                                            <!--<a ng-if="!model.isFollowing(follower.userId)"-->
+                                            <!--ng-click="model.followUser(follower.userId, follower.username)"-->
+                                            <!--class="btn btn-sm btn-success pull-right">Follow {{follower.username}}</a>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <a class="navbar-brand" href="#"></a>
+        </div>
+    </div>
+</nav>
