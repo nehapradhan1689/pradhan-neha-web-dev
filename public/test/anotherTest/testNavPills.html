@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="tabs">
+    <ul class="nav nav-pills">
+        <li class="active"><a data-toggle="pill" data-target="#tips">Tips/Comments</a></li>
+        <li><a data-toggle="pill" data-target="#photos">Photos</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="tips" class="tab-pane fade in active">
+            <h3>Add Tips/Comment</h3>
+            <form>
+<textarea type="text"
+          rows="3"
+          class="form-control">
+</textarea>
+                <button class="btn btn-primary pull-right">Done</button>
+            </form>
+        </div>
+        <div id="photos" class="tab-pane fade">
+            <div id="photosList" class="col-xs-12 col-sm-6 col-md-4" ng-repeat = "img in model.photosURL">
+                <div class="thumbnail">
+                    <div class="embed-responsive embed-responsive-4by3">
+                        <image id="searchImage" ng-src="{{img}}"></image>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
